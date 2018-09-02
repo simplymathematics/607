@@ -1,0 +1,102 @@
+---
+title: "Assignment 1"
+author: "simplymathematics"
+date: "September 2, 2018"
+output: html_document
+---
+## Reading the data
+Next we must read the data into memory. Here we import the file as a csv and assign it a variable name 'mushrooms.'
+
+```
+link <- "https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data"
+mushrooms <- read.table(file = link, header = FALSE, sep = ",")
+head(mushrooms)
+```
+
+## Creating a Data Frame with some columns
+
+Next, we have to decide what features we want. After a quick read of the .names file, we see that odor, spore-print-color, stalk surface above ring, habitat, and cap color can identify, with certainty, whether a mushroom is poisonous or not. These features correspond to columns 5, 20, 12, 22, 3 correspond with the above data points. The first column, containing either a 'p' for poisonous, or an 'e' for edible is the feature that we hope to find with our model.
+
+```
+shrooms1 <- mushrooms[1]
+shrooms2 <- mushrooms[6]
+shrooms3 <- mushrooms[21]
+shrooms4 <- mushrooms[13]
+shrooms5 <- mushrooms[23]
+shrooms6 <- mushrooms[4]
+shrooms <- cbind(shrooms1,shrooms2,shrooms3,shrooms4,shrooms5,shrooms6)
+```
+
+## Adding Column Headers
+
+```
+colnames(shrooms) <-c("Edible/Poisonous", "Odor","Spore-Print-Color","Stalk Surface above Ring","Habitat", "Cap Color")
+```
+
+Then we need to change the abbreviations into something human-readable.
+
+### Edible/Poisonous
+```
+levels(shrooms$`Edible/Poisonous`) <- c(levels(shrooms$`Edible/Poisonous`), c("Edible","Poisonous"))
+shrooms$`Edible/Poisonous`[shrooms$`Edible/Poisonous` == "e"] <- "Edible"
+shrooms$`Edible/Poisonous`[shrooms$`Edible/Poisonous` == "p"] <- "Poisonous"
+```
+### Odor
+
+```
+levels(shrooms$Odor) <- c(levels(shrooms$Odor), c("Almond", "Anise", "Creosote", "Fishy", "Foul", "Musty", "None", "Pungent", "Spicy"))
+shrooms$Odor[shrooms$Odor == "a"] <- "Almond"
+shrooms$Odor[shrooms$Odor == "l"] <- "Anise"
+shrooms$Odor[shrooms$Odor == "c"] <- "Creosote"
+shrooms$Odor[shrooms$Odor == "y"] <- "Fishy"
+shrooms$Odor[shrooms$Odor == "f"] <- "Foul"
+shrooms$Odor[shrooms$Odor == "m"] <- "Musty"
+shrooms$Odor[shrooms$Odor == "n"] <- "None"
+shrooms$Odor[shrooms$Odor == "p"] <- "Pungent"
+shrooms$Odor[shrooms$Odor == "s"] <- "Spicy"
+```
+### Spore Print Color
+```
+levels(shrooms$'Spore-Print-Color') <- c(levels(shrooms$'Spore-Print-Color'), c("Black","Brown","Buff","Chocolate","Green","Orange","Purple","White","Yellow"))
+shrooms$'Spore-Print-Color'[shrooms$'Spore-Print-Color' == 'k'] <- "Black"
+shrooms$'Spore-Print-Color'[shrooms$'Spore-Print-Color' == 'n'] <- "Brown"
+shrooms$'Spore-Print-Color'[shrooms$'Spore-Print-Color' == 'b'] <- "Buff"
+shrooms$'Spore-Print-Color'[shrooms$'Spore-Print-Color' == 'o'] <- "Orange"
+shrooms$'Spore-Print-Color'[shrooms$'Spore-Print-Color' == 'u'] <- "Purple"
+shrooms$'Spore-Print-Color'[shrooms$'Spore-Print-Color' == 'w'] <- "White"
+shrooms$'Spore-Print-Color'[shrooms$'Spore-Print-Color' == 'y'] <- "Yellow"
+```
+### Habitat
+```
+levels(shrooms$'Habitat') <- c(levels(shrooms$'Habitat'), c("Grasses","Leaves","Meadows","Paths","Urban","Waste","Woods"))
+shrooms$'Habitat'[shrooms$'Habitat' == 'g'] <- "Grasses"
+shrooms$'Habitat'[shrooms$'Habitat' == 'l'] <- "Leaves"
+shrooms$'Habitat'[shrooms$'Habitat' == 'm'] <- "Meadows"
+shrooms$'Habitat'[shrooms$'Habitat' == 'p'] <- "Paths"
+shrooms$'Habitat'[shrooms$'Habitat' == 'u'] <- "Urban"
+shrooms$'Habitat'[shrooms$'Habitat' == 'w'] <- "Waste"
+shrooms$'Habitat'[shrooms$'Habitat' == 'd'] <- "Woods"
+```
+### Cap Color
+```
+levels(shrooms$"Cap Color") <- c(levels(shrooms$"Cap Color"), c("Brown", "Buff", "Cinnamon", "Gray", "Green", "Pink", "Purple", "Red", "White", "Yellow"))
+shrooms$"Cap Color"[shrooms$"Cap Color" == "n"] <- "Brown"
+shrooms$"Cap Color"[shrooms$"Cap Color" == "b"] <- "Buff"
+shrooms$"Cap Color"[shrooms$"Cap Color" == "c"] <- "Cinnamon"
+shrooms$"Cap Color"[shrooms$"Cap Color" == "g"] <- "Gray"
+shrooms$"Cap Color"[shrooms$"Cap Color" == "r"] <- "Green"
+shrooms$"Cap Color"[shrooms$"Cap Color" == "p"] <- "Pink"
+shrooms$"Cap Color"[shrooms$"Cap Color" == "u"] <- "Purple"
+shrooms$"Cap Color"[shrooms$"Cap Color" == "e"] <- "Red"
+shrooms$"Cap Color"[shrooms$"Cap Color" == "w"] <- "White"
+shrooms$"Cap Color"[shrooms$"Cap Color" == "y"] <- "Yellow"
+```
+
+### Stalk Surface Above Ring
+```
+levels(shrooms$'Stalk Surface above Ring') <- c(levels(shrooms$'Stalk Surface above Ring'), c("Fibrous","Scaly","Silky","Smooth"))
+shrooms$'Stalk Surface above Ring'[shrooms$'Stalk Surface above Ring' == 'f'] <- "Fibrous"
+shrooms$'Stalk Surface above Ring'[shrooms$'Stalk Surface above Ring' == 'y'] <- "Scaly"
+shrooms$'Stalk Surface above Ring'[shrooms$'Stalk Surface above Ring' == 'k'] <- "Silky"
+shrooms$'Stalk Surface above Ring'[shrooms$'Stalk Surface above Ring' == 's'] <- "Smooth"
+```
