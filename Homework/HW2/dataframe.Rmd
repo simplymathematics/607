@@ -1,0 +1,8 @@
+# dataframe.R
+
+```{r}
+install.packages("RMySQL")
+library(RMySQL)
+database <- dbConnect(MySQL(), user='user', password=localuserpassword, dbname='movies', host='localhost')
+
+```
