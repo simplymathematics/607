@@ -1,0 +1,98 @@
+---
+title: "607 HW 3"
+author: "simplymathematics"
+date: "September 16, 2018"
+output: html_document
+---
+
+This code creates a data frame from the raw data.
+```{r}
+raw.data <-"555-1239Moe Szyslak(636) 555-0113Burns, C. Montgomery555-6542Rev. Timothy Lovejoy555 8904Ned Flanders636-555-3226Simpson, Homer5553642Dr. Julius Hibbert"
+
+library(stringr)
+
+names <- unlist(str_extract_all(raw.data, "[a-zA-Z]+[,]*[.]*[\\ ]+[a-zA-Z]+[.\\ ]*[a-zA-Z]*"))
+
+phones <- unlist(str_extract_all(raw.data, "[(]*[\\d{3}]*[) ]*[\\d]{3}[-\\ ]*[\\d]{4}"))
+
+df<-data.frame(name=names, phone= phones)
+df
+```
+This following code reverses the names if they contain a comma. This will break everything if a name legitimately has a comma.
+```{r}
+reversed.names <- str_split(names, ", ", simplify = TRUE)
+
+names <- str_c(reversed.names[, 2], reversed.names[, 1])
+names <- str_replace(names, "([a-z])([A-Z])", "\\1 \\2")
+```
+The following code creates 2 vectors with first names and last names respectively. Then, it creates a boolean vector denoting whether a name contains a title. It then stores these in a dataframe called 'df.'
+```{r}
+
+first.name <- unlist(str_extract(names, "^((Mr.|Mrs.|Dr.|Rev.|Hon.).)*[[:alpha:]]*[\\w\\d]+"))
+
+last.name <- str_extract(names,"[[:alpha:]]+($|,{5,})")
+
+title <- c(str_detect(first.name, "Mr.|Mrs.|Dr.|Rev.|Hon."))
+
+df<-data.frame(first.name = first.name, last.name = last.name, title=title)
+df
+```
+
+```{r}
+# Breaks if second name and title, but fine for this dataset. 
+tmp <-str_replace_all(names, "(Mr. |Mrs. |Dr. |Rev. |Hon. )","")
+second.name <- c(str_detect(tmp, "[:space:]+[:alpha:]+[:space:]+"))
+#second.name <- c(tmp - title)
+second.name 
+
+```
+### 4
+
+#### 1  [0-9]\\$  
+This regular expression is 1 digit between 0 and 9 followed by a '\' and the end of a line.  
+
+1\  
+2\  
+3\  
+
+#### 2 \\b[a-z]{1,4}\\b  
+This expression matches a 1-4 character string made up of lowercase letters surrounded by word boundaries.  
+
+ a  
+bed   
+add  
+
+#### 3 .*?\\.txt$  
+This expression matches any line that ends in .txt.  
+
+this.txt  
+that.txt  
+even.this.txt.or.that.txt  
+
+#### 4 \\d{2}/\\d{2}/\\d{4}  
+
+This expression matches any string that has 2 digits, a '/', 2 digits, another '/', and then 4 digits, like  
+
+01/01/1900  
+12/12/1212  
+35/35/3553  
+
+#### 5 <(/+?)>/+?</\\1>  
+
+This expressions matches a '<' followed by a lazily read '/', followed by a '>', followed by one or more lazily read '/', another '<', a '/', a '\,' and a '1>'  
+
+<//>/</\1>  
+<//>/<//\1>  
+</>/</\1>  
+
+### 9
+
+```{r}
+code <- "clcopCow1zmstc0d87wnkig7OvdicpNuggvhryn92Gjuwczi8hqrfpRxs5Aj5dwpn0TanwoUwisdij7Lj8kpf03AT5Idr3coc0bt7yczjatOaootj55t3Nj3ne6c4Sfek.r1w1YwwojigOd6vrfUrbz2.2bkAnbhzgv4R9i05zEcrop.wAgnb.SqoU65fPa1otfb7wEm24k6t3sR9zqe5fy89n6Nd5t9kc4fE905gmc4Rgxo5nhDk!gr"
+
+letters <- str_split(code,"")
+sort(table(letters))
+
+# No luck with this one. I know it has something do with frequency analysis, but nothing about this table is straightforward
+
+```

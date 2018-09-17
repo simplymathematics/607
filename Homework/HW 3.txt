@@ -1,0 +1,14 @@
+555-1239Moe Szyslak(636) 555-0113Burns, C. Montgomery555-6542Rev. Timothy Lovejoy555 8904Ned Flanders636-555-3226Simpson, Homer5553642Dr. Julius Hibbert
+
+raw_numbers <- [(]*[\d\d\d]*[) ]*[0-9]+-*[0-9]+
+raw_names <- [a-zA-Z]+[,\.]*[\ ]+[a-zA-Z]+[.\ ]*[a-zA-Z]*
+titles <-  
+
+
+1\
+
+.sadasdas.asdasd.121231231.txt
+
+03/15/1991T
+
+<//>/</\1>
