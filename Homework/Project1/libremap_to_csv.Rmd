@@ -1,0 +1,91 @@
+---
+title: "607 Project 1"
+author: "simplymathematics"
+date: "September 23, 2018"
+output: html_document
+---
+
+I decided to use data from Libremap.net to fulfill this assignment. It uses data collected from community-run networks around the world. The agent collects data from the radio driver in the integrated circuit which is reported to this website as a json. However, I know nothing about scraping, and I obtained this file by inspecting the page. 
+
+I used the tidyr library to import the JSON. There are 45 rows in this document which represent 45 different measuring devices in a single map box on the page.
+
+```{r}
+require(jsonlite)
+
+dat <- fromJSON("libremap.json", flatten = TRUE)
+dat <- dat$rows
+head(dat)
+```
+Some information was very easy to parse because it as already set up as a vector. Latitude, longitude, agent version and agent type were parsed as below. 
+
+```{r}
+lat <- c(dat$value.lat)
+lon <- c(dat$value.lon)
+agent.version <- c(dat$value.api_rev)
+type <- c(dat$value.type)
+```
+However, in order for this data collection to scale and work over time, it will need to keep track of the bounding box that was measured. Since it was stored as a list, we have to flatten the data so that each direction has its own column.
+```{r}
+tmp <- c(dat$bbox)
+nw <- lapply(tmp, '[', 1)
+ne <- lapply(tmp, '[', 2)
+sw <- lapply(tmp, '[', 3)
+se <- lapply(tmp, '[', 4)
+```
+Next, we collect data about the hardware and what data it has chosen to provide. 
+
+```{r}
+agent.plugin <- c(dat$value.attributes.submitter.plugins)
+agent.location <- grepl("location", agent.plugin)
+agent.bmx <- grepl("bmx", agent.plugin)
+agent.wireless <- grepl("wireless", agent.plugin)
+agent.system <- grepl("system", agent.plugin)
+model <- c(dat$value.attributes.system.model)
+hostname <- c(dat$value.hostname)
+community <- c(dat$value.community)
+```
+Finally, we store all of these things as a big vector of vectors and look at it to make sure it's going ok.
+```{r}
+big.one <- cbind(time, community, lat,lon,agent.version, type, nw, ne, sw, se, agent.plugin, agent.location, agent.bmx, agent.wireless, agent.system, model, hostname)
+dim(big.one)
+head(big.one)
+
+```
+
+The next section requires iterating through the nested scan data that exists for each row of the above. Because each scan datum is a list of a list, we have to repeat the above and fill out our table. Then, we can save it all as a csv. 
+
+```{r}
+links <-c(dat$value.links)
+index = 2
+
+for (index in 2:45 ){
+  types <- c(dat$value.links[[index]]$type)
+ 
+  signal <- dat$value.links[[index]]$attributes.signal
+  mac.local <- dat$value.links[[index]]$attributes.local_mac
+  mac.station <- dat$value.links[[index]]$attributes.station_mac
+  channel <- dat$value.links[[index]]$attributes.channel
+  graph <- cbind(types,signal,mac.local,mac.station, channel)
+  size <- length(types)
+  size
+
+  # repeat a line from big.one for each row of this frame
+  community <- matrix(rep(community[index], size))
+  lat <- matrix(rep(lat[index],size))
+  lon <- matrix(rep(lon[index],size))
+  version <- matrix(rep(agent.version[index], size))
+  plugin <- matrix(rep(agent.plugin[index],size))
+  bmx <- matrix(rep(agent.bmx[index],size))
+  agent.wireless <- matrix(rep(agent.wireless[index],size))
+  agent.system <- matrix(rep(agent.system[index],size))
+  model <- matrix(rep(model[index],size))
+  hostname <- matrix(rep(hostname[index],size))
+  
+  #bind them all together
+  data <- cbind( community, lat, lon, version, plugin, bmx, agent.wireless, agent.system, model, hostname, signal, mac.local, mac.station, channel)
+  #append to csv
+  write.table(data, file="test.csv", col.names=TRUE, append=TRUE)
+}
+
+```
+
