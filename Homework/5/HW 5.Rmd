@@ -1,0 +1,30 @@
+---
+title: "607 5"
+author: "simplymathematics"
+date: "September 30, 2018"
+output: html_document
+---
+
+```{r}
+require(readr)
+require(tidyr)
+require(dplyr)
+data <- read_csv('flights.csv')
+data <- fill(data, X1)
+tbl_df(data)
+
+```
+```{r}
+alaska.good = c(t(filter(data, X2 =="ontime", X1 == "ALASKA"))[3:7])
+alaska.late = c(t(filter(data, X2 =="delayed", X2  =="ALASKA"))[3:7])
+amwest.good = c(t(filter(data, X2 =="ontime", X1 == "AMWEST"))[3:7])
+amwest.late = c(t(filter(data, X2 =="delayed", X2  =="AMWEST"))[3:7])
+
+```
+
+```{r}
+alaska = filter(data, X1 == "ALASKA")
+amwest = filter(data, X1 == "AMWEST")
+
+
+```

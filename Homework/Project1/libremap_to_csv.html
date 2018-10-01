@@ -277,7 +277,6 @@ for (index in 2:45 ){
   mac.local &lt;- dat$value.links[[index]]$attributes.local_mac
   mac.station &lt;- dat$value.links[[index]]$attributes.station_mac
   channel &lt;- dat$value.links[[index]]$attributes.channel
-  graph &lt;- cbind(types,signal,mac.local,mac.station, channel)
   size &lt;- length(types)
   size
 
@@ -296,139 +295,8 @@ for (index in 2:45 ){
   #bind them all together
   data &lt;- cbind( community, lat, lon, version, plugin, bmx, agent.wireless, agent.system, model, hostname, signal, mac.local, mac.station, channel)
   #append to csv
-  write.table(data, file=&quot;test.csv&quot;, col.names=TRUE, append=TRUE)
+  write.table(data, file=&quot;dat.csv&quot;, col.names=FALSE, append=TRUE)
 }</code></pre>
-<pre><code>## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file
-
-## Warning in write.table(data, file = &quot;test.csv&quot;, col.names = TRUE, append =
-## TRUE): appending column names to file</code></pre>
 
 
 
