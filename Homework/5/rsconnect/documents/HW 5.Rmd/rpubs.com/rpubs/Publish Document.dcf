@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/424701/fe95da3370e143a68b5a93780e3706fc
+bundleId: https://api.rpubs.com/api/v1/document/424701/fe95da3370e143a68b5a93780e3706fc
+url: http://rpubs.com/simplymathematics/424701
+when: 1538367254.21471

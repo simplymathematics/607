@@ -5,26 +5,51 @@ date: "September 30, 2018"
 output: html_document
 ---
 
+First, to make our lives easy, we will use three packages from the tidyverse: readr, tidyr, and dplyr. Then, we will read the data in with read_csv and fill in the null spots with the correct data using fill().
+
 ```{r}
 require(readr)
 require(tidyr)
 require(dplyr)
 data <- read_csv('flights.csv')
 data <- fill(data, X1)
-tbl_df(data)
+data
 
 ```
+Next we crea data frames for each airline and give the columns names.
 ```{r}
-alaska.good = c(t(filter(data, X2 =="ontime", X1 == "ALASKA"))[3:7])
-alaska.late = c(t(filter(data, X2 =="delayed", X2  =="ALASKA"))[3:7])
-amwest.good = c(t(filter(data, X2 =="ontime", X1 == "AMWEST"))[3:7])
-amwest.late = c(t(filter(data, X2 =="delayed", X2  =="AMWEST"))[3:7])
+alaska <- data.frame(t(filter(data, X1 == "ALASKA")[3:7]))
+amwest <- data.frame(t(filter(data, X1 == "AMWEST")[3:7]))
+colnames(alaska) <- c( 'Ontime', 'Delayed')
+colnames(amwest) <- c( 'Ontime', 'Delayed')
+```
+
+Then, we add a column that shows the delay rate for each city and airline.
+```{r}
+alaska <- mutate(alaska, Rates = Delayed/(Ontime+Delayed), Totals = Ontime+Delayed)
+amwest <- mutate(amwest, Rates = Delayed/(Ontime+Delayed), Totals = Ontime+Delayed)
+alaska
+```
+
+Next, we bind the rates columns from each airline and give the new data frame column names.
+```{r}
+rates <- data.frame(cbind(alaska$Rates, amwest$Rates))
+colnames(rates) <- c("Alaska", "Amwest")
+mean(rates$Alaska)
+mean(rates$Amwest)
+sd(rates$Alaska)
+sd(rates$Amwest)
+median(rates$Alaska)
+median(rates$Amwest)
 
 ```
 
+This shows us that at the average city, Amwest is more likely to be delayed than Alaska but Alaska has more variance between cities. However, we can see that Alaska had an average of .15 delays and Amwest had .10 when we look at the aggregate data.
 ```{r}
-alaska = filter(data, X1 == "ALASKA")
-amwest = filter(data, X1 == "AMWEST")
-
-
+sum(alaska$Delayed)/sum(alaska$Totals)
+sum(amwest$Delayed)/sum(amwest$Totals)
+```
+This makes sense when we see that both sets of data are skewed.
+```{r}
+summary(rates)
 ```
