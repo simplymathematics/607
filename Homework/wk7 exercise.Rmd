@@ -1,0 +1,12 @@
+---
+title: "607 Wk 7 Exercise"
+author: "simplymathematics"
+date: "October 11, 2018"
+output: html_document
+---
+
+Suppse we are attending a college which has 3000 students. We wish to choose a subset of size 100 from the student body. Let X represent the subset, chosen using the following possible strategies. For which strategies would ibe appropriate to assign the uniform distribution to X. If it is appropriate, what probabilty should we assign to each outcome?
+
+- a) Since X is random, it would be inappropriate to call it a random uniform distribution, and the probability of students arriving to the cafeteria is likely bell-shaped and grouped around scheduled meal times.
+- b) Because the most significant digits of a social security are not randomized, these numbers are not uniform. 
+- c) By making an index card of each student, dropping them out of a 30-story building, and randomly picking them up, you ensured that each student can be drawn the same number of times. The odds of any one card getting picked are $\frac{1}{n}$ where $n$ is 3000. 
