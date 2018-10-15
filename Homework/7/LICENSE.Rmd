@@ -1,0 +1,7 @@
+---
+title: "607 Wk 7"
+author: "simplymathematics"
+date: "October 14, 2018"
+output: html_document
+---
+

@@ -1,0 +1,38 @@
+---
+title: "607 Wk 7"
+author: "simplymathematics"
+date: "October 14, 2018"
+output: html_document
+---
+
+As always, we will start with our dependendencies. The data for this can be found [on github](https://github.com/simplymathematics/607/tree/master/Homework/7). 
+
+```{r}
+library(XML, quietly= TRUE)
+suppressPackageStartupMessages(library(tidyverse, quietly = TRUE))
+library(rjson)
+
+```
+Reading an html table is very straightforward. 
+```{r}
+data.file <- "data.html"
+html.data <- readHTMLTable(data.file)
+html.data
+
+```
+In the XML file, we must establish a node as a root node, then unnest each node below it. Finally, we store the transpose of this data as the dataframe we see below.
+```{r}
+data.file <- "data.xml"
+xml.data <- xmlParse(data.file)
+rootNode <- xmlRoot(xml.data)
+xml.data <- xmlSApply(rootNode,function(x) xmlSApply(x, xmlValue))
+xml.frame <- data.frame(t(xml.data),row.names=NULL)
+xml.frame
+```
+Jsons are a bit simpler again given that this one is formatted as a list already. (As opposed to the structure we defined on the fly in an XML). Each row is an instance of the 'books' object that complies to the .js standard.
+```{r}
+json.data <- fromJSON(file ="data.json", simplify = TRUE )
+data.frame(json.data)
+```
+
+This file can be found on github as well as rendered as an html on rpubs [here](rpubs.com/simplymathematics/web-data)
