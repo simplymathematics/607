@@ -1,0 +1,23 @@
+---
+title: "607 Wk 9"
+author: "simplymathematics"
+date: "October 28, 2018"
+output: html_document
+---
+
+# NY Times Article API
+
+
+As always, we start with the dependencies.
+```{r}
+library(devtools)
+library(jsonlite)
+```
+Then, I used my api key and constructed a query to search the NYT article database, looking for articles about conspiracies. 
+```{r}
+api.key <- "&api-key=d91ad4b850a54ec3b69ce5fa515c43e3"
+url <- "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=conspiracy"
+req <- fromJSON(paste0(url, api.key))
+articles <- data.frame(req$response$docs)
+articles
+```
