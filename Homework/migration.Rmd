@@ -1,0 +1,54 @@
+---
+title: "607 Week 13"
+author: "simplymathematics"
+date: "November 25, 2018"
+output: html_document
+---
+As always, we start with our dependencies.  I used Ubuntu 18.04 and grabbed the mongodb binaries directly from the organization's repository as the Ubuntu binaries were out of date. 
+
+```
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6  
+echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list  
+sudo apt-get update  
+```
+Then, I install mongo-db as well as some OpenSSL dependencies. This required me to make a directory at /data/db and give ownership of that directory to my user locally. Then, I had to run the server with root permissions because it opens a port.
+```
+sudo apt-get install -y mongodb-org  
+sudo apt install libssl-dev libsasl2-dev  
+sudo mkdir -p /data/db  
+sudo chown username /data/db  
+sudo mongod  
+```
+This one loads the mongo R library.
+```{r}
+library('mongolite')
+```
+
+I decided to use the cars dataset because it was available when I opened the notebook. Below, we can see the cars data as a data frame.
+```{r cars}
+summary(cars)
+df <- as.data.frame(cars)
+df
+```
+Here, I convert the dataframe into a Mongodb collection called "collection."
+```{r}
+collection <- mongo(collection = "df", db = "Cars")
+collection$insert(df)
+```
+Below shows how to call a single row and what the data looks like.
+```{r}
+collection$iterate()$one()
+```
+## Advantages
+
+- Works better with javascript as each line is already formatted as an object.
+- NoSQL databases do not require declaring variables, tables, etc. 
+- No Foreign IDs
+- Scales with hardware instead of number of nodes
+- With nested data, nosql databases use less bandwidth than a wide csv
+
+## Disadvantages
+- Longer processing times for queries
+- Stranger looking code relative to dataframe model
+- Distributed nosql databases are very chatty and require much overhead
+- Does not scale particularly well if tables are all related horizontally and not nested
